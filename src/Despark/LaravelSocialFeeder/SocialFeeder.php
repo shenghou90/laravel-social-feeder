@@ -4,8 +4,6 @@ use Config;
 
 use Facebook;
 
-//require_once  base_path() . '/vendor/facebook/graph-sdk/src/Facebook/autoload.php';
-
 class SocialFeeder {
 
     public static function updateTwitterPosts()
@@ -16,11 +14,6 @@ class SocialFeeder {
             Config::get('laravel-social-feeder::twitterCredentials.accessToken'),
             Config::get('laravel-social-feeder::twitterCredentials.accessTokenSecret')
         );
-        Log::debug(Config::get('laravel-social-feeder::twitterCredentials.consumerKey'));
-        Log::debug( Config::get('laravel-social-feeder::twitterCredentials.consumerSecret'));
-        Log::debug( Config::get('laravel-social-feeder::twitterCredentials.accessToken'));
-        Log::debug( Config::get('laravel-social-feeder::twitterCredentials.accessTokenSecret'));
-
         $params = array(
             'screen_name' => Config::get('laravel-social-feeder::twitterCredentials.screen_name'),
             'count' => Config::get('laravel-social-feeder::twitterCredentials.limit'),
@@ -44,7 +37,6 @@ class SocialFeeder {
         {
             $tweets = array();
         }
-        //Log::debug("here SH: " . print_r($tweets, true));
         $outputs = array();
         foreach ($tweets as $tweet)
         {
@@ -62,8 +54,6 @@ class SocialFeeder {
                 'published_at' => date('Y-m-d H:i:s', strtotime($tweet->created_at)),
             ];
 
-            //$newPostEntity = new \SocialPost;
-            //$newPostEntity->fill($newPostData)-save();
             array_push($outputs, $newPostData);
         }
         return $outputs;
@@ -188,9 +178,6 @@ class SocialFeeder {
                     'author_image_url' => $post->user->profile_picture,
                     'published_at' => date('Y-m-d H:i:s', $post->caption->created_time),
                 );
-
-               // $newPostEntity = new \SocialPost;
-                //$newPostEntity->fill($newPostData)->save();
                 array_push($outputs, $newPostData);
             }
         }
